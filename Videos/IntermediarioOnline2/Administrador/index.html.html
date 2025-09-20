@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intermediário Online - Painel de Administração</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">🔒 Acesso Restrito</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="senhaAdmin" class="form-label">Senha de Acesso</label>
+                        <input type="password" class="form-control" id="senhaAdmin" placeholder="Digite a senha">
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-danger" onclick="verificarLogin()">Entrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-red shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand text-yellow" href="index.html">
+                <span class="fw-bold">Intermediário</span> Online Admin
+            </a>
+            <span class="navbar-text ms-auto text-white me-3 d-none d-md-block" id="nomeUsuario">
+                Admin
+            </span>
+            <button class="btn btn-outline-light" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </div>
+    </nav>
+
+    <header class="bg-light py-5">
+        <div class="container">
+            <h1 class="display-5 fw-bold text-center text-red">Painel de Administração</h1>
+            <p class="lead text-center">Gerencie os anúncios e veja as estatísticas do site.</p>
+        </div>
+    </header>
+
+    <main class="container my-5">
+        <section class="mb-5">
+            <div class="row text-center">
+                <div class="col-md-4 mb-3">
+                    <div class="card p-3 shadow-sm">
+                        <h5 class="card-title">Anúncios Totais</h5>
+                        <p class="display-6" id="totalAnuncios">0</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card p-3 shadow-sm">
+                        <h5 class="card-title">Anúncios Ativos</h5>
+                        <p class="display-6 text-success" id="anunciosAtivos">0</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card p-3 shadow-sm">
+                        <h5 class="card-title">Anúncios Pendentes</h5>
+                        <p class="display-6 text-warning" id="anunciosPendentes">0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-red text-white">
+                            <h5 class="mb-0">📊 Anúncios por Dia</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="graficoPorDia" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-red text-white">
+                            <h5 class="mb-0">📍 Anúncios por Localização</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="graficoPorBairro" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5 bg-white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            <input type="text" id="filtroBusca" class="form-control" placeholder="Filtrar por bairro, preço ou contacto...">
+                        </div>
+                    </div>
+                    <div class="col-md-4 d-flex align-items-center gap-2">
+                        <button id="btnExportarCSV" class="btn btn-success">📊 Exportar CSV</button>
+                        <button id="btnRecarregar" class="btn btn-outline-secondary">🔄 Recarregar</button>
+                    </div>
+                </div>
+
+                <div id="mensagemErro" class="alert alert-danger d-none" role="alert">
+                    ❌ Erro ao carregar anúncios. Verifique o console.
+                </div>
+
+                <div id="listaAnunciosAdmin" class="mt-4">
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="contactos" class="bg-black text-yellow text-center py-4">
+        <div class="container">
+            <p class="mb-0">© 2024 Intermediário Online. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <script src="admin.js"></script>
+
+    <script>
+    function logout() {
+        if (confirm('Tem certeza que deseja sair?')) {
+            localStorage.removeItem('adminLogado');
+            location.reload(); // Recarrega e mostra o modal
+        }
+    }
+
+    function verificarLogin() {
+        const senha = document.getElementById('senhaAdmin').value;
+        if (senha === 'Irinamandante') {
+            localStorage.setItem('adminLogado', 'true');
+            const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+            loginModal.hide();
+            setTimeout(() => {
+                carregarTudo();
+            }, 500); // Pequeno delay para garantir que o modal fechou
+        } else {
+            alert('Senha incorreta!');
+        }
+    }
+
+    // ✅ VERIFICA LOGIN AO CARREGAR A PÁGINA
+    document.addEventListener('DOMContentLoaded', function() {
+        if (!localStorage.getItem('adminLogado')) {
+            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            loginModal.show();
+        } else {
+            carregarTudo();
+        }
+    });
+</script>
+</body>
+</html>
