@@ -1,64 +1,26 @@
-/* CORES OFICIAIS: Vermelho (#CC0000), Preto (#000000), Amarelo (#FFCC00) */
-
+/* ========== PALETA DE CORES PROFISSIONAL ========== */
 :root {
-    --vermelho: #CC0000;
-    --preto: #000000;
-    --amarelo: #FFCC00;
-}
-
-.text-red { color: var(--vermelho); }
-.text-yellow { color: var(--amarelo); }
-.text-black { color: var(--preto); }
-.bg-red { background-color: var(--vermelho); }
-.bg-yellow { background-color: var(--amarelo); }
-
-.btn-red {
-    background-color: var(--vermelho);
-    border-color: var(--vermelho);
-    color: white;
-}
-.btn-red:hover {
-    background-color: darkred;
-    border-color: darkred;
-}
-
-.btn-yellow {
-    background-color: var(--amarelo);
-    border-color: var(--amarelo);
-    color: var(--preto);
-    font-weight: bold;
-}
-.btn-yellow:hover {
-    background-color: gold;
-    border-color: gold;
-}
-
-.btn-outline-red {
-    color: var(--vermelho);
-    border-color: var(--vermelho);
-}
-.btn-outline-red:hover {
-    background-color: var(--vermelho);
-    color: white;
+    --cor-primaria: #2c3e50;
+    --cor-secundaria: #e74c3c;
+    --cor-whatsapp: #25D366;
+    --cor-fundo-claro: #f8f9fa;
+    --cor-texto: #34495e;
+    --cor-hover: rgba(44, 62, 80, 0.1);
 }
 
 .hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-color: var(--cor-primaria);
     color: white;
     padding: 80px 0;
     text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 .search-box {
     max-width: 600px;
     margin: 30px auto;
 }
-.carousel-item img {
-    height: 250px;
-    object-fit: cover;
-    border-radius: 10px;
-}
 .price {
-    color: #dc3545;
+    color: var(--cor-secundaria);
     font-weight: bold;
 }
 #mapa-interativo {
@@ -66,35 +28,56 @@
     margin: 40px 0;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: relative;
 }
 .card {
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    min-height: 380px;
+    position: relative;
 }
 .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 .navbar-brand span { font-weight: bold; }
-.text-red { color: #dc3545; }
-.text-yellow { color: #ffc107; }
-.btn-red { background-color: #dc3545; border-color: #dc3545; }
-.btn-yellow { background-color: #ffc107; border-color: #ffc107; }
+.text-red { color: var(--cor-secundaria); }
+.btn-red { 
+    background-color: var(--cor-secundaria); 
+    border-color: var(--cor-secundaria); 
+}
+.btn-red:hover {
+    background-color: #c0392b;
+    border-color: #c0392b;
+}
+.btn-whatsapp {
+    background-color: var(--cor-whatsapp);
+    border-color: var(--cor-whatsapp);
+    color: white;
+}
+.btn-whatsapp:hover {
+    background-color: #128C7E;
+    border-color: #128C7E;
+}
 .icon-section .icon-box {
     text-align: center;
     padding: 20px;
-    background-color: #f8f9fa;
+    background-color: var(--cor-fundo-claro);
     border-radius: 10px;
     border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+.icon-section .icon-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px var(--cor-hover);
 }
 .icon-section .icon-box i {
     font-size: 3rem;
-    color: #764ba2;
+    color: var(--cor-primaria);
     margin-bottom: 15px;
 }
-
-/* Modal Galeria */
 .modal-body .img-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -111,79 +94,99 @@
 .modal-body .img-gallery img:hover {
     transform: scale(1.05);
 }
-.modal-body .main-img-container {
-    text-align: center;
-    margin-bottom: 15px;
-}
 .modal-body .main-img-container img {
     width: 100%;
     height: 300px;
     object-fit: cover;
     border-radius: 8px;
 }
-
-/* Estilos para a nova seção de pagamento */
 .payment-option {
-    background: #f8f9fa;
+    background: var(--cor-fundo-claro);
     border: 1px solid #e9ecef;
     border-radius: 10px;
     padding: 20px;
     text-align: center;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 .payment-option:hover {
     transform: translateY(-5px);
+    box-shadow: 0 4px 15px var(--cor-hover);
 }
 .payment-option i {
     font-size: 3rem;
     margin-bottom: 15px;
-    color: #495057;
+    color: var(--cor-texto);
 }
 .payment-option h5 {
     font-weight: bold;
 }
-
-/* Tooltip do mapa */
+.spinner-border {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
 .seta-tooltip {
-    background: var(--vermelho);
+    background: var(--cor-secundaria);
     color: white;
     font-weight: bold;
-    padding: 5px 10px;
+    padding: 10px;
     border-radius: 5px;
     font-size: 14px;
+    max-width: 250px;
 }
-
-/* Sombra suave nos cards */
-.card {
-    transition: transform 0.3s, box-shadow 0.3s;
-    border: none;
-}
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-
-/* Navbar */
-.navbar-brand {
+.seta-tooltip a {
+    color: #fff;
+    text-decoration: none;
     font-weight: bold;
-    font-size: 1.5rem;
 }
-
-/* Responsivo */
+.seta-tooltip a:hover {
+    text-decoration: underline;
+}
+#carouselDestaqueGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+.carousel-item-grid {
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    position: absolute;
+    width: 100%;
+    pointer-events: none;
+}
+.carousel-item-grid.active {
+    opacity: 1;
+    position: relative;
+    pointer-events: auto;
+}
 @media (max-width: 768px) {
-    .navbar-brand {
-        font-size: 1.3rem;
-    }
-    .btn-lg {
-        display: block;
-        width: 100%;
-        margin-bottom: 10px;
+    #carouselDestaqueGrid {
+        grid-template-columns: 1fr;
     }
 }
-
-/* Footer */
-footer {
-    background-color: #000 !important; /* Preto puro */
-    color: #FFCC00;
-    padding: 2rem 0;
+.btn-floating {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+.badge {
+    font-weight: bold;
+    font-size: 0.8rem;
 }
